@@ -23,7 +23,13 @@ The final command will drop you into a shell where you execute commands and scri
 
 # Convert Pre-built Docker Image to Apptainer
 
-If you want to use ```portal.cs.virginia.edu``` then you need to use Apptainer.  This is an alternative container system that does essentially what Docker does.   The first step is to build an Apptainer image, a ```.sif``` file, from a pre-built docker image that I created using the steps above and that is published on Docker hub
+If you want to use ```portal.cs.virginia.edu``` then you need to use Apptainer.  This is an alternative container system that does essentially what Docker does.   ```portal``` uses a module system and you need to explicitly load the ```apptainer``` module with this command:
+```
+module load apptainer
+```
+You can do add this to your login shell profile if you want to avoid typing it repeatedly.
+
+The first step is to build an Apptainer image, a ```.sif``` file, from a pre-built docker image that I created using the steps above and that is published on Docker hub
 
 ```
 cd cs6888-public
