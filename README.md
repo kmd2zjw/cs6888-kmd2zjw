@@ -1,24 +1,40 @@
-You must have [Docker](https://www.docker.com/get-started) and [Docker Compose](https://docs.docker.com/compose/install/) installed.
-
+The first thing to do is to clone this repository.
 ```
+cd $HOME
 git clone git@github.com:matthewbdwyer/cs6888-public.git
+```
+
+The following instructions all assume you cloned into your ```$HOME``` directory.  
+
+There are two ways to build the image for use in the homeworks.
+
+1) Build Docker Image Locally
+
+To do this you must have [Docker](https://www.docker.com/get-started) and [Docker Compose](https://docs.docker.com/compose/install/) installed locally on your machine.  You will not be able to do this on ```portal.cs.virginia.edu```, due to licensing issues with Docker.  You can still use Docker for your personal use on your machine.
+
+Once installed and your docker instance is running you execute the following:
+```
 cd cs6888-public
-
-
 docker-compose up --build &
 docker-compose exec main bash
+```
+The final command will drop you into a shell where you can navigate around.
 
-build on x86 mac and publish at docker hub
+2) Convert Pre-built Docker Image to Apptainer
 
-check out whether you can build an apptainer sif from that docker image
-e.g., https://rcs.ucalgary.ca/How_to_convert_a_Docker_container_to_an_Apptainer_container
+If you want to use ```portal.cs.virginia.edu``` then you need to use Apptainer.  This is an alternative container system that does essentially what Docker does.   
+The first step is to build an Apptainer image, a ```.sif``` file, from a pre-built docker image that I created using the steps above and that is published on Docker hub
 
-and then execute it on portal.
-
-This will allow people to run locally on their own machines or use portal.
-I'm hoping it sidesteps the lack of docker-compose
-
-apptainer build main.sif Apptainer.def &
-apptainer exec main.sif bash
-
+```
+cd cs6888-public
+apptainer build main.sif docker://matthewbdwyer/cs6888-public-main
+```
+Now you have a local Apptainer image that you can run as follows
+```
+apptainer run main.sif bash
+```
+This will give you a shell with a prompt like ```Apptainer>```.  Apptainer does not translate all of the information from the docker image correctly, so to make the homework scripting work within the running Apptainer shell you should execute the following commands:
+```
+PATH=/root/infer/bin:/root/cppcheck/build/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ln -s $HOME/cs6888-public/files $HOME/files
 ```
