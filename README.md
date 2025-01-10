@@ -1,7 +1,7 @@
 The first thing to do is to clone this repository.
 ```
 cd $HOME
-git clone git@github.com:matthewbdwyer/cs6888-public.git
+git clone https://github.com/matthewbdwyer/cs6888-public.git
 ```
 
 The following instructions all assume you cloned into your ```$HOME``` directory.  
